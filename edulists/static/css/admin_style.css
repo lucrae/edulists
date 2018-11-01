@@ -1,0 +1,46 @@
+html, body {
+    background-color: black;
+    font-family: 'Roboto Mono', monospace;
+    color: white;
+    margin: 0px;
+    padding: 0px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* top-bar */
+
+.top-bar {
+    width: 100%;
+    background-color: #4444ff;
+    display: flex;
+}
+
+.top-bar-box {
+    padding: 6px 12px;
+}
+
+.top-bar-box:hover {
+    background-color: white;
+    color: blue;
+    cursor: pointer;
+}
+
+/* tables */
+
+.heading {
+    background: #2b2ba7;
+    padding: 6px 12px;
+}
+
+.key {
+    padding: 4px 6px;
+    width: 256px;
+    color: gray;
+}
+
+.value {
+    padding: 4px 6px;
+}

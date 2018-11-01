@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto+Slab:400,700|Merriweather:400,900" rel="stylesheet">
+
+    <title>EduLists Australia</title>
+</head>
+
+<body>
+    <div class="top-bar">
+        <div id="top-bar-line"></div>
+        <div class="top-bar-content">
+            <a href="{{ url_for('main.index') }}"><div class="top-bar-title-box"><span id="title">EduLists Australia</span></div></a>
+            <a href="#"><div class="top-bar-box">Subjects</div></a>
+            <a href="{{ url_for('main.about') }}"><div class="top-bar-box">About</div></a>
+
+            <div class="top-bar-box-right">
+                <a href="#" id="top-bar-log-in">Log In</a>
+            </div>
+            
+        </div>
+    </div>
+
+    {% block content %}{% endblock %}
+</body>
+
+</html>

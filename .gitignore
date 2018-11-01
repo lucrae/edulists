@@ -1,0 +1,11 @@
+# folders
+.vscode/
+bin/
+migrations/
+
+# cached files
+__pycache__/
+*.pyc
+
+# config files
+config.cfg
