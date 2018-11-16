@@ -5,7 +5,13 @@ config_file = configparser.ConfigParser()
 config_file.readfp(open(r'config.cfg'))
 
 class Config:
+    # general
     SECRET_KEY = config_file.get('general', 'SECRET_KEY')
+
+    # environment
+    ENV = config_file.get('environment', 'ENV')
+    DEBUG = bool(config_file.get('environment', 'DEBUG'))
+    TESTING = bool(config_file.get('environment', 'TESTING'))
 
     # database
     DB_USER = config_file.get('database', 'USER')

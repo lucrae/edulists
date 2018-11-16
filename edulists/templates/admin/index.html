@@ -1,18 +1,7 @@
 {% extends "admin/_base.html" %}{% block content %}
 
-{% for config in config_details %}
-    <div class="heading">
-        [{{ config }}]
-    </div>
-    <table>
-        {% for name in config_details[config] %}
-        <tr>
-            <td class="key">{{ name }}</td>
-            <td class="value">{{ config_details[config][name] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <br>
-{% endfor %}
+<div>
+    index
+</div>
 
 {% endblock %}
