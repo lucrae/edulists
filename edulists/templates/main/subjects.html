@@ -1,0 +1,43 @@
+{% extends "main/_base.html" %}{% block content %}
+
+<section class="section">
+    <div class="container">
+        [subjects]
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="field-body">
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">State</label>
+                </div>
+                <div class="control">
+                    <div class="select">
+                        <select>
+                            <option>VIC</option>
+                            <option>NSW</option>
+                            <option>QLD</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="field has-addons">
+                <div class="control has-icons-left">
+                    <input class="input" type="text" placeholder="Search subjects...">
+                    <span class="icon is-left">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+                <div class="control">
+                    <a class="button is-info">
+                        Search
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+{% endblock %}
