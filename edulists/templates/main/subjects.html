@@ -2,41 +2,68 @@
 
 <section class="section">
     <div class="container">
-        [subjects]
+        <h1 class="title">
+            Your Subjects
+        </h1>
+        <h2 class="subtitle">
+            These are the subjects that you are subscribed to
+        </h2>
+        <div class="box">
+            {% if subjects %}
+                <table class="table is-fullwidth">
+                    <tr>
+                        <th style="width:100%;">Subject Name</th>
+                        <th>Subscribed</th>
+                    </tr>
+                    {% for subject in subjects %}
+                        <tr>
+                            <td>
+                                <i class="fas fa-check" style="color: var(--success);"></i>&nbsp; {{ subject.curriculum }}: {{ subject.name }}
+                                <br>
+                                <span class="tag is-light">
+                                    <i class="fas fa-tag" style="color: gray;"></i>&nbsp; {{ subject.address }}
+                                </span>
+                            </td>
+                            <td>
+                                <a class="button is-outlined is-small is-danger" href="{{ url_for('main.unsubscribe_from_subjects_page', subject_id=subject.id) }}">
+                                    Unsubscribe
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <div style="text-align: center; color: gray;">
+                    <i>You have not subscribed to any subjects yet.</i>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </section>
 <section class="section">
     <div class="container">
-        <div class="field-body">
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                    <label class="label">State</label>
-                </div>
-                <div class="control">
-                    <div class="select">
-                        <select>
-                            <option>VIC</option>
-                            <option>NSW</option>
-                            <option>QLD</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="field has-addons">
-                <div class="control has-icons-left">
-                    <input class="input" type="text" placeholder="Search subjects...">
-                    <span class="icon is-left">
-                        <i class="fas fa-search"></i>
-                    </span>
-                </div>
-                <div class="control">
-                    <a class="button is-info">
-                        Search
-                    </a>
-                </div>
-            </div>
+        <h1 class="title">
+            Browse Subjects
+        </h1>
+        <h2 class="subtitle">
+            Select your curriculum and browse subjects
+        </h2>
+        <div class="box">
+            <table class="table is-fullwidth">
+                <tr>
+                    <th style="width:100%;">Curriculum Name</th>
+                    <th>Region</th>
+                    <th>Years</th>
+                </tr>
+                {% for curriculum in curriculums %}
+                    <tr>
+                        <td><i class="fas fa-scroll " style="color: var(--accent);"></i>&nbsp; <a href="{{ url_for('main.browse_subjects', curriculum=curriculum.acronym) }}">{{ curriculum.name }} ({{ curriculum.acronym }})</a></td>
+                        <td>{{ curriculum.region }}</td>
+                        <td>{{ curriculum.years }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
-        
     </div>
 </section>
 

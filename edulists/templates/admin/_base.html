@@ -2,17 +2,33 @@
 <html>
 
 <head>
+    <!-- META -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?familyRoboto+Mono:400,700" rel="stylesheet">
+    
+    {% if title %}
+        <title>EduLists Australia - {{ title }}</title>
+    {% else %}
+        <title>EduLists Australia</title>
+    {% endif %}
+    
+    <!--  STYLESHEETS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/root.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <title>EduLists Admin</title>
+    <!-- FONTS / ICONS -->
+    <script src="{{ url_for('static', filename='icons/js/all.js') }}"></script>
+
+    <!-- SCRIPTS -->
+    <script src="{{ url_for('static', filename='scripts/burger.js') }}"></script>
 </head>
 
 <body>
     <div>
         [edulists admin]
     </div>
+
     {% block content %}{% endblock %}
 </body>
 

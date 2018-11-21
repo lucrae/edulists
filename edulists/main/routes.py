@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 import urllib3
 
 from edulists import db
-from edulists.models import User
+from edulists.models import User, Subject, Subscription
 from edulists.forms import RegisterForm, LoginForm
 
 http = urllib3.PoolManager()
@@ -44,7 +44,7 @@ def login():
 
     # user is already logged in
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
 
     form = LoginForm()
 
@@ -75,7 +75,7 @@ def register():
             form.email.data,
             form.first_name.data.title(),
             form.last_name.data.title(),
-            urllib.request.urlopen('http://ip.42.pl/raw').read().decode('utf-8'),
+            http.request('GET', 'http://ip.42.pl/raw').data.decode('utf-8'),
         )
 
         new_user.set_password(form.password.data)
@@ -91,7 +91,87 @@ def register():
 @main.route('/subjects')
 @login_required
 def subjects():
-    return render_template('main/subjects.html', title='Subjects')
+    subjects = [sub.subject for sub in current_user.subscriptions]
+
+    curriculums = [
+        {
+            'name': 'Australian Curriculum',
+            'acronym': 'GEN',
+            'region': 'AUS',
+            'years': 'F-10',
+        },
+        {
+            'name': 'Victorian Certificate of Education',
+            'acronym': 'VCE',
+            'region': 'VIC',
+            'years': '11-12',
+        },
+        {
+            'name': 'Higher School Certificate',
+            'acronym': 'HSC',
+            'region': 'NSW',
+            'years': '11-12',
+        },
+        {
+            'name': 'Queensland Certificate of Education',
+            'acronym': 'QCE',
+            'region': 'QLD',
+            'years': '11-12',
+        }
+    ]
+
+    return render_template('main/subjects.html', title='Subjects', subjects=subjects, curriculums=curriculums)
+
+@main.route('/browse-subjects/<curriculum>')
+@login_required
+def browse_subjects(curriculum):
+    subjects = Subject.query.filter_by(curriculum=curriculum).all()
+
+    return render_template('main/browse_subjects.html', title='Browse Subjects', curriculum=curriculum, subjects=subjects)
+
+@main.route('/subscribe/<subject_id>')
+@login_required
+def subscribe(subject_id):
+    subject = Subject.query.get(subject_id)
+    
+    # create subscription
+    new_subscription = Subscription(current_user.id, subject_id)
+    db.session.add(new_subscription)
+    db.session.commit()
+
+    flash(f'You are now subscribed to "{subject.curriculum}: {subject.name}"', 'success')
+
+    # redirect back to page
+    return redirect(url_for('main.browse_subjects', curriculum=subject.curriculum))
+
+@main.route('/unsubscribe/<subject_id>')
+@login_required
+def unsubscribe(subject_id):
+    subject = Subject.query.get(subject_id)
+    subscription = Subscription.query.filter_by(user_id=current_user.id).filter_by(subject_id=subject_id)
+
+    # delete the subscription
+    subscription.delete()
+    db.session.commit()
+
+    flash(f'You have unsubscribed to "{subject.curriculum}: {subject.name}"', 'success')
+
+    return redirect(url_for('main.browse_subjects', curriculum=subject.curriculum))
+
+@main.route('/unsubscribe-from-subjects-page/<subject_id>')
+@login_required
+def unsubscribe_from_subjects_page(subject_id):
+    subject = Subject.query.get(subject_id)
+    subscription = Subscription.query.filter_by(user_id=current_user.id).filter_by(subject_id=subject_id)
+
+    # delete the subscription
+    subscription.delete()
+    db.session.commit()
+
+    flash(f'You have unsubscribed to "{subject.curriculum}: {subject.name}"', 'success')
+
+    return redirect(url_for('main.subjects'))
+        
 
 @main.route('/about')
 def about():
