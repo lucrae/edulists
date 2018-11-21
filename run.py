@@ -1,6 +1,6 @@
 from flask.cli import FlaskGroup
 from edulists import create_app, cli, db
-from edulists.models import User
+from edulists.models import User, Subject, Subscription
 
 app = create_app()
 cli.register(app)
@@ -11,6 +11,8 @@ def make_shell_context():
         'app': app,
         'db': db,
         'User': User,
+        'Subject': Subject,
+        'Subscription': Subscription,
     }
 
 if __name__=='__main__':

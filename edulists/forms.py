@@ -23,6 +23,16 @@ class RegisterForm(FlaskForm):
             self.email.errors.append('Sorry, this email address is already taken.')
             return False
 
+        # first name has non-letter characters
+        if not self.first_name.data.isalpha():
+            self.first_name.errors.append('Please only use letters for your name.')
+            return False
+
+        # last name has non-letter characters
+        if not self.last_name.data.isalpha():
+            self.last_name.errors.append('Please only use letters for your name.')
+            return False
+
         return True
 
 class LoginForm(FlaskForm):

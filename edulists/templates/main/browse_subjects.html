@@ -1,0 +1,47 @@
+{% extends "main/_base.html" %}{% block content %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">
+            Browse Subjects: {{ curriculum }}
+        </h1>
+        <h2 class="subtitle">
+            Browse and subscribe to subjects in the {{ curriculum }}
+        </h2>
+        <p style="margin-bottom: 16px">
+            <a href="{{ url_for('main.subjects') }}">
+                <i class="fas fa-chevron-left"></i> Back to Your Subjects
+            </a>
+        </p>
+        <div class="box">
+            <table class="table is-fullwidth">
+                <tr>
+                    <th style="width:100%;">Subject Name</th>
+                    <th>Subscribed</th>
+                </tr>
+                {% for subject in subjects %}
+                    <tr>
+                        {% if subject.has_subscriber(current_user.id) %}
+                            <td><i class="fas fa-check" style="color: var(--success);"></i>&nbsp; {{ subject.name }}</td>
+                            <td>
+                                <a class="button is-small is-danger" href="{{ url_for('main.unsubscribe', subject_id=subject.id) }}">
+                                    Unsubscribe
+                                </a>
+                            </td>
+                        {% else %}
+                            <td>{{ subject.name }}</td>
+                            <td>
+                                <a class="button is-small is-success is-fullwidth" href="{{ url_for('main.subscribe', subject_id=subject.id) }}">
+                                    Subscribe
+                                </a>
+                            </td>
+                        {% endif %}
+                        
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
